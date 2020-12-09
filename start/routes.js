@@ -20,7 +20,7 @@ Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
 
-Route.get('/Post', 'PostController.index');
+Route.get('/Post', 'PostController.index').middleware('auth');
 Route.post('/Post', 'PostController.create');
 Route.put('/Post/:id', 'PostController.update');
 Route.delete('/Post/:id', 'PostController.excluir');

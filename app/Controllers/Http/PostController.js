@@ -4,12 +4,22 @@ const Post = use("App/Models/Post");
 
 class PostController {
 
-  async create ({ request, response }){
-    const data = request.only(['title', 'body']);
+  async create ({ request, response, auth }) {
+    try {
+      const { id } = auth.user;
+      const { title, body } = request.only(['title', 'body']);
 
-    const posts = await Post.create(data);
+      const posts = await Post.create({
+        title,
+        body,
+        user_id: id
+      });
 
-    return response.send(posts);
+      return response.send(posts);
+    } catch (error) {
+      console.log(error);
+      return response.send({ message: 'error' });
+    }
   }
 
   async update({ params, request, response }){
